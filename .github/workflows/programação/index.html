@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vision Imagens</title>
+
+  <!-- Fontes e AOS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #4c6ef5;
+      --text-dark: #1e1e2f;
+      --text-light: #ffffff;
+      --bg-light: #f9fafc;
+      --gray: #666;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      background: #fff;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      height: 2px;
+      width: 0;
+      left: 0;
+      bottom: -4px;
+      background: var(--primary);
+      transition: 0.3s;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 120px 20px 60px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--gray);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+    }
+
+    /* Carrossel para desktop */
+    .carousel {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      height: 400px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .carousel img.active {
+      opacity: 1;
+    }
+
+    /* Galeria mobile (não usada mais) */
+    .mobile-gallery {
+      display: none;
+    }
+
+    /* Cards de serviços */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .service-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-card i {
+      font-size: 30px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    /* Contato */
+    .contact {
+      text-align: center;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #3b5bdb;
+    }
+
+    /* Botão WhatsApp flutuante */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50%;
+      padding: 16px;
+      font-size: 24px;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: background 0.3s;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .whatsapp-float:hover {
+      background: #20b358;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 0;
+      }
+
+      nav a {
+        font-size: 1.1rem;
+      }
+
+      section {
+        padding: 100px 15px 50px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+      }
+
+      /* Esconde o carrossel no mobile */
+      .carousel {
+        display: none;
+      }
+
+      /* Esconde também a galeria mobile, se houver */
+      .mobile-gallery {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu -->
+  <header>
+    <nav>
+      <a href="#inicio" class="active">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="inicio" class="hero" data-aos="fade-up">
+    <h1>Vision Imagens</h1>
+    <p>Comunicação visual moderna para o seu negócio</p>
+    <p>Como você quer destacar seu comércio hoje?</p>
+
+    <!-- Carrossel desktop -->
+    <div class="carousel" aria-label="Carrossel de imagens">
+      <img src="comunicacao_visual.png" class="active" alt="Imagem 1" />
+      <img src="foto2.webp" alt="Imagem 2" />
+      <img src="img3.jpg" alt="Imagem 3" />
+    </div>
+
+    <!-- Galeria mobile removida -->
+  </section>
+
+  <!-- Serviços -->
+  <section id="servicos" data-aos="fade-up">
+    <h2>Nossos Serviços</h2>
+    <p>Oferecemos soluções personalizadas em:</p>
+    <div class="services">
+      <div class="service-card">
+        <i>🖼️</i>
+        <h3>Faixas e Placas</h3>
+      </div>
+      <div class="service-card">
+        <i>📢</i>
+        <h3>Banners Promocionais</h3>
+      </div>
+      <div class="service-card">
+        <i>💳</i>
+        <h3>Cartões de Visita</h3>
+      </div>
+      <div class="service-card">
+        <i>🗑️</i>
+        <h3>Lixeiras para Carro</h3>
+      </div>
+      <div class="service-card">
+        <i>🚗</i>
+        <h3>Tapetes Automotivos</h3>
+      </div>
+      <div class="service-card">
+        <i>🎨</i>
+        <h3>Materiais Gráficos</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato" class="contact" data-aos="fade-up">
+    <h3>Entre em contato conosco</h3>
+    <p>Estamos prontos para atender: (47) 9673-6535</p>
+    <form>
+      <input type="text" placeholder="Seu nome" required />
+      <input type="email" placeholder="Seu e-mail" required />
+      <textarea rows="4" placeholder="Escreva sua mensagem..."></textarea>
+      <button type="submit">Enviar Mensagem</button>
+    </form>
+  </section>
+
+  <!-- WhatsApp flutuante -->
+  <a
+    href="https://wa.me/554796736535"
+    target="_blank"
+    class="whatsapp-float"
+    title="Fale conosco no WhatsApp"
+    >💬</a
+  >
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Carrossel desktop
+    const slides = document.querySelectorAll('.carousel img');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    setInterval(nextSlide, 4000);
+
+    // Scroll ativo no menu
+    const links = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 150;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      links.forEach((link) => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').substring(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
